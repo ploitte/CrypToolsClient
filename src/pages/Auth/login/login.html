@@ -16,41 +16,53 @@
 <ion-content padding id="loginPage">
 
 
-  <h2 text-center>Login</h2>
+  <div class="top">
 
-  <form [formGroup]="formLogin" (ngSubmit)="submitLogin()">
-
-        <ion-list>
-          <ion-item>
-            <ion-label floating>Username/Email</ion-label>
-            <ion-input type="text" formControlName="username"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label floating>Password</ion-label>
-            <ion-input type="password" formControlName="password"></ion-input>
-          </ion-item>
-        </ion-list>
-
-        <button ion-item color="primary" type="submit" block full text-center [disabled]="!formLogin.valid">Register</button>
-
-  </form>
+    <div id="logo"></div>
+    
+  </div>
 
 
-  <!-- <div class="inputTest">
-    <ion-input type="text" placeholder="Username..."></ion-input> 
-  </div>       -->
+  <div class="bottom">
+    <form [formGroup]="formLogin" (ngSubmit)="submitLogin()">
 
-  <ion-item class="inputTest">        
-    <ion-label> <ion-icon name="logo-playstation"></ion-icon></ion-label>
-    <ion-input clearInput type="text" placeholder="Username..."></ion-input>
-  </ion-item>
+      <ion-list>
+        <ion-item class="inputItem">
+          <ion-label> <ion-icon name="contact"></ion-icon> </ion-label>
+          <ion-input type="text" formControlName="username" placeholder="Username..."></ion-input>
+        </ion-item>
+        <ion-item class="inputItem">
+          <ion-label> <ion-icon name="lock"></ion-icon> </ion-label>
+          <ion-input type="password" formControlName="password" placeholder="Password..."></ion-input>
+        </ion-item>
+        <div class="contCheck">
+          <div class="sContCheckLeft">
+              <!-- <ion-checkbox checked="false" id="checkLogin"></ion-checkbox> -->
+              <input id="checkLogin" type="checkbox">
+              <span>Remember Me</span>
+          </div>
+          <div class="sContCheckRight">
+            <span>Forgot your password?</span>
+          </div>
+
+        </div>
+
+        <button ion-item color="primary" type="submit" block full text-center 
+        [disabled]="!formLogin.valid">
+          LOG-IN
+        </button>
+      </ion-list>
+
+    </form>
+
+
+      <span class="gotoregister"(click)="gotToRegister()">I am not registered</span>
+
+
+  </div>
 
 
 
-
-<div text-center>
-  <span (click)="gotToRegister()">I am not registered</span>
-</div>
 
 
 
