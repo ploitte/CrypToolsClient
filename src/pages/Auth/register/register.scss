@@ -1,5 +1,93 @@
 page-register {
 
 
+    #registerPage{
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: grey;
+        background-image: url("../assets/imgs/background/test1.png");
+
+        #logo{
+            height: 220px;
+            width: 220px;
+            background-image: url("../assets/imgs/logos/logoRegister200x200.png");
+            background-position: center;
+        }                                     
+
+        .top, .bottom{
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            height: 50%;
+        }
+
+        .top{
+            position: relative;
+            
+            #errors{
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                background: #ff000000;
+
+                ion-card-header{
+                    font-weight: bold;
+                    overflow: visible;
+                    margin: 1px;
+                    background: #ff00009c;
+                }
+
+            }
+     
+        }
+
+        .bottom{
+            flex-direction: column;
+            justify-content: flex-start;
+            position: relative;
+
+            span{
+                width: 100%;
+                position: absolute;
+                text-align: center;
+                bottom:10%;
+                color: white;
+            }
+
+
+            form{
+                width: 100%;
+            }
+        }
+
+        .item-md{
+            padding: 0;
+        }
+
+        ion-label{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 15%;
+            margin: 0;
+            
+            ion-icon{
+                font-size: 1.6em;
+                color: #3965A9;
+            }
+        }
+
+
+        .item-md:not(#test){
+            opacity: 0.8;
+        }
+
+
+
+
+    }
+
 
 }

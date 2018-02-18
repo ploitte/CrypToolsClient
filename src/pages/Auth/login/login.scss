@@ -1,14 +1,6 @@
 page-login {
 
 
-    // .item-md{
-    //     opacity: 0.7;
-    // }
-
-    // button{
-    //     opacity: 1;
-    // }
-
     #loginPage{
         display: flex;
         flex-direction: column;
@@ -28,6 +20,10 @@ page-login {
             left: 0;
             bottom: 10%;
         }
+
+        .item-md:not(#test){
+            opacity: 0.8;
+        }
     }
 
     .top{
@@ -35,6 +31,7 @@ page-login {
         width: 100%;
         display: flex;
         justify-content: center;
+        position: relative;
 
         #logo{
             height: 220px;
@@ -42,6 +39,23 @@ page-login {
             background-image: url("../assets/imgs/logos/logoLogin200x200.png");
             background-position: center;
         }
+      
+        #errors{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background: #ff000000;
+
+            ion-card-header{
+                font-weight: bold;
+                overflow: visible;
+                margin: 1px;
+                background: #ff00009c;
+            }
+
+        }
+     
+
     }
 
     .bottom{
@@ -61,6 +75,7 @@ page-login {
             
             ion-icon{
                 font-size: 1.6em;
+                color: #3965A9;
             }
         }
 
@@ -100,6 +115,7 @@ page-login {
         }
 
     }
+
 
 
 

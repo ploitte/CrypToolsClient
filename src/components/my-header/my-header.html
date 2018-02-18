@@ -1,0 +1,24 @@
+<ion-navbar color="primary">
+
+    <div id="navBarre">
+
+        <div id="leftTitle">
+            <ion-icon name="logo40"></ion-icon>
+            <h4 >{{title}}</h4>
+        </div>
+
+        <div id="rightTitle">
+            <h3 style="color:orange" *ngIf="rights == 1">ADMIN</h3>
+            <ion-icon *ngIf="rights == 1" name="construct" id="tools"></ion-icon>
+            <ion-icon name="contact" id="user"></ion-icon>
+            <ion-icon name="log-out" id="out" (click)="logOut()"></ion-icon>
+            
+        </div>
+
+    </div>
+
+</ion-navbar>
+
+
+
+

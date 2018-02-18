@@ -14,3 +14,43 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+
+//LOGO THEMING
+
+.ion-ios-marketLogo,
+.ion-md-marketLogo {
+  content: url("../assets/imgs/logos/logoMarket40x40.png");
+  width: 40px;
+  height: 40px;
+}
+
+.ion-ios-marketLogoOrange,
+.ion-md-marketLogoOrange {
+  content: url("../assets/imgs/logos/logoMarket40x40O.png");
+  width: 24px;
+  height: 24px;
+}
+
+.ion-ios-alertLogo,
+.ion-md-alertLogo {
+  content: url("../assets/imgs/logos/alertLogo40x40.png");
+  width: 40px;
+  height: 40px;
+}
+
+.ion-ios-walletLogo,
+.ion-md-walletLogo {
+  content: url("../assets/imgs/logos/logowallet40x40.png");
+  width: 40px;
+  height: 40px;
+}
+
+.ion-ios-logo40,
+.ion-md-logo40 {
+  content: url("../assets/imgs/logos/Logo40x40.png");
+  width: 40px;
+  height: 40px;
+}
+
+

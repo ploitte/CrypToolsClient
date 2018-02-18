@@ -6,13 +6,42 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>forgotPass</ion-title>
-  </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding id="forgotPage">
+
+
+  <div class="top">
+
+    <div id="logo"></div>
+
+  </div>
+
+
+  <div class="bottom">
+
+      <form [formGroup]="formForgot" (ngSubmit)="submitForgot()">
+        <ion-list>
+
+            <ion-item class="inputItem">
+                <ion-label> <ion-icon name="mail"></ion-icon></ion-label>
+                <ion-input type="text" formControlName="email" placeholder="Your address email..."></ion-input>
+            </ion-item>
+            <button id="test" ion-item color="primary" type="submit" block full text-center 
+            [disabled]="!formForgot.valid">
+              SUBMIT
+            </button>
+
+        </ion-list>  
+      </form>
+  </div>
+
+  <div id="contRoot">
+      <span (click)="goToLogin()">Login</span>
+      <span> | </span>
+      <span (click)="goToRegister()">Register</span>
+  </div> 
 
 </ion-content>

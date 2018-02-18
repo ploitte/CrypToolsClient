@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-an
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { PasswordValidation } from "../../../validators/passwordValidation";
 import { AuthProvider } from "../../../providers/auth/auth";
-import { NativeStorage } from '@ionic-native/native-storage';
+import { loadingTools } from '../../../providers/Tools/loading';
 
 
 /**
@@ -25,13 +25,14 @@ import { NativeStorage } from '@ionic-native/native-storage';
 export class RegisterPage {
 
   private formRegister: FormGroup;
+  private errors:any[];
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private formBuilder: FormBuilder,
     public loadingCtrl: LoadingController,
     public authProvider: AuthProvider,
-    private nativeStorage: NativeStorage) 
+    public loading:loadingTools) 
     {
       this.formRegister = this.formBuilder.group({
         username: ["", Validators.compose([Validators.required, Validators.maxLength(60)])],
@@ -41,8 +42,6 @@ export class RegisterPage {
       },{
         validator: PasswordValidation.MatchPassword
       });
-
-      // this.nativeStorage.getItem("user").then(data=>console.log(data), error=>console.log(error));
     }
 
 
@@ -53,26 +52,24 @@ export class RegisterPage {
 
 
   submitRegister(){
-    let loader = this.loadingCtrl.create({content: ""});
-    loader.present();
+    this.loading.start();
 
     this.authProvider.register(this.formRegister.value).subscribe(response =>{
 
-      console.log(response);
-
       if(response["message"] == "success"){
-        loader.dismiss();
+        this.loading.stop();
         
-        this.nativeStorage.setItem("user", {
-          token: response["token"]
-        })
+        this.navCtrl.push("loginPage", {
+          message: "You are now registered"
+        });
         
       }else{
-       loader.dismiss(); 
-       
+        this.loading.stop();
+        this.errors = response["errors"];
       }   
     });
   }
+
 
 
   goToLogin(){

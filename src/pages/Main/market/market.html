@@ -1,0 +1,88 @@
+<!--
+  Generated template for the MarketPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<!-- <ion-header>
+
+  <ion-navbar color="primary">
+
+    <div id="navBarre">
+
+        <div id="leftTitle">
+            <ion-icon name="logo40"></ion-icon>
+            <h4>Market</h4>
+        </div>
+
+        <div id="rightTitle">
+            <ion-icon name="contact" id="user"></ion-icon>
+            <ion-icon name="log-out" id="out"></ion-icon>
+        </div>
+
+    </div>
+
+  </ion-navbar>
+
+</ion-header> -->
+
+<ion-header>
+    <my-header rights="{{rights}}" title="Market"></my-header>
+</ion-header>
+
+
+<ion-content id="page">
+
+    <ion-segment [(ngModel)]="appType" color="secondary">
+
+        <ion-segment-button value="market" id="segButt">
+          <ion-icon name="marketLogoOrange"></ion-icon>
+        </ion-segment-button>
+
+        <ion-segment-button value="favoris"> 
+          <ion-icon name="star" color="secondary"></ion-icon>
+        </ion-segment-button>
+
+    </ion-segment>
+
+    <ion-searchbar
+    placeholder="Search currencie..." 
+    color="danger"
+    [(ngModel)]="searchBar" ></ion-searchbar>
+
+    <div id="contButton">
+        <button ion-button default color="danger" *ngIf="rights == 1" (click)="pushMoneys()">UPDATE MONEY IN BDD</button>
+    </div>
+    
+
+
+
+    <!-- Currencies -->
+    <div class="titleList" id="barTitle">
+
+      <div class="classement titleDetail" (click)="orderingBy('rank')" id="rank">#</div>
+      <div class="coin titleDetail" (click)="orderingBy('name')">Coin</div>
+      <div class="price titleDetail" (click)="orderingBy('price_usd')">Price</div>
+      <div class="change titleDetail" (click)="orderingBy('percent_change_24h')">Chg.24h</div>
+      <div class="favorite titleDetail" id="favrite"></div>
+
+    </div>
+    <ion-list>
+      
+      <div class="titleList currencieList"  *ngFor="let currencie of currencies | filter:searchBar | orderBy:selectedCol:selectedDirection; let i = index;">
+          <div class="classement titleDetail">{{currencie.rank}}</div>
+          <div class="coin titleDetail">
+            <span class="nameCoin">{{currencie.name }}</span>
+            <span class="symbol">{{currencie.symbol}}</span>
+          </div>
+          <div class="price titleDetail">${{currencie.price_usd}}</div>
+          <div colorPourcent class="change titleDetail" id="{{currencie.percent_change_24h}}">{{currencie.percent_change_24h}}%</div>
+          <div class="favorite titleDetail" (click)="addFavoris(i)"><ion-icon name="star"></ion-icon></div>
+      </div>
+
+
+    </ion-list>
+
+      
+</ion-content>
+

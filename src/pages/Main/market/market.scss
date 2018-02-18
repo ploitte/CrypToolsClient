@@ -1,0 +1,144 @@
+page-market {
+
+    .red{
+        color: red;
+    }
+
+    .green{
+        color: green;
+    }
+
+    #contButton{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;        
+        text-align: center;
+    }
+
+    
+    #navBarre{
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        #leftTitle{
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            margin: 0 0 0 2%;
+            width: 50%;
+        
+            h4{
+                color: white;
+                margin: 4%;
+            }
+        }
+
+        h3{
+            margin: 0;
+        }
+
+
+
+        #rightTitle{
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            width: 30%;
+            height: 100%;
+            position: absolute;
+            right: 0;
+
+            #user{
+                font-size: 2.2em;
+                color: white;
+                margin: 0 8% 0 8%;
+            }
+
+            #tools{
+                font-size: 2.2em;
+                color: white;
+                margin-left: 10%;
+            }
+
+            #out{
+                font-size: 1.8em;
+                color: red;
+                font-weight: bold;
+            }
+        }
+    }
+
+
+    #segButt{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .searchbar-md .searchbar-input{
+       background: rgba(57, 101, 169, 0.23137254901960785);
+    }
+
+    .segment-md .segment-button{
+        border-bottom-width: 5px;
+    }
+    
+    #barTitle{
+        background-color: #13366E;
+        margin: 1% 0 0 0;
+        height: 4%;
+        color: white;
+        font-size: 1.1em;
+        border-right: 1px solid white;
+    }
+
+    .titleList{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+
+        .titleDetail{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;  
+        }
+
+
+        .classement{width: 10%;background: #3965a9; color: white;}
+
+        .coin{width: 30%; flex-direction: column; }
+
+        .price{width: 30%;}
+
+        .change{width: 20%;}
+
+        .favorite{width: 10%; border:none; background: #FF9045; font-size: 1.3em;color: white};
+    
+        #favrite, #rank{
+            background: #13366E;
+        }
+    }
+
+    .currencieList{
+        height: 60px;
+        border: 1px solid #C0C0C0; 
+        margin: 0;
+        font-weight: bold;
+        background: #D9D9D9;
+    }
+
+    .nameCoin{
+        color: #13366e;
+    }
+    .symbol{
+        color: #FF9045;
+    }   
+
+ 
+
+
+}
