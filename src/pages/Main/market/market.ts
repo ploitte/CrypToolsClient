@@ -44,7 +44,7 @@ export class MarketPage {
 
   //Favoris
   favoris:any[] = [];
-  favorisFlag:boolean = false;
+  favorisFlag:boolean;
 
 
 
@@ -82,6 +82,7 @@ export class MarketPage {
     //Get market Cap
     this.getCurrencies();
 
+
   }
 
   //Get all currencies
@@ -92,12 +93,37 @@ export class MarketPage {
       if(response != null){
 
           this.currencies = response;
+          this.getFavoris();
           this.loadingTools.stop();
 
       }else{
         //Error here
       }
     })
+  }
+  
+  //Get favoris of user
+  getFavoris(){
+    this.favoris = [];
+    this.favorisProvider.actionFavoris("get", this.user.id).subscribe(response=>{
+      let flag = true;
+      this.loadingTools.start();
+
+      for(let key in response){
+        for(let key2 in this.currencies){
+          if(response[key].name === this.currencies[key2].id){
+            this.favoris.push(this.currencies[key2]);
+            flag = false;
+          }
+        }
+      }
+
+      if(!flag){
+        this.loadingTools.stop();
+        console.log(this.favoris);
+      }
+
+    });
   }
 
   //Sort click title
@@ -107,6 +133,7 @@ export class MarketPage {
     this.selectedDirection = this.selectedFlag ? 1 : -1;
   }
 
+  //Admin: Add money in bdd
   pushMoneys(){
     
       this.moneyProvider.pushMoneys( this.user.id, this.currencies).subscribe(response=>{
@@ -115,23 +142,44 @@ export class MarketPage {
 
   }
 
-  clickFavoris(index){
-    //Voir flag pierre Plusieur tours de boucle
-    let currencie = this.currencies[index];
-    // if(this.favoris.length)
-    if(this.favoris.length === 0){
-        this.favoris.push(currencie);
-    }else{
-      for(let key in this.favoris){
-        if(this.favoris[key].id === currencie.id){
-          this.favoris.splice(parseInt(key), 1);
+  //Add Supp favorite
+  AddSuppFavoris(index){
 
-        }else{
-          this.favoris.push(currencie);
-        }
+    let flag:boolean;
+    let indice:number;
+
+    let currencie = this.currencies[index];
+
+    this.loadingTools.start();
+
+    if(this.favoris.length === 0){
+      flag = true;
+    }
+
+    for(let key in this.favoris){
+      if(currencie.id === this.favoris[key].id){
+        flag = false;
+        indice = parseInt(key);
+      }else{
+        flag = true;
       }
     }
-    console.log(this.favoris);
+
+    if(flag === true){
+      this.favoris.push(currencie);
+      this.favorisProvider.actionFavoris("add", this.user.id, currencie.id).subscribe(response=>{
+        this.loadingTools.stop();
+        console.log(response);
+      });
+    }else{
+      this.favoris.splice(indice, 1);
+      this.favorisProvider.actionFavoris("delete", this.user.id, currencie.id).subscribe(response=>{
+        this.loadingTools.stop();
+        console.log(response);
+      })
+    }
+
   }
+
 
 }

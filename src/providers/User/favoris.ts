@@ -15,7 +15,7 @@ export class FavorisProvider{
 
   constructor(public http: HttpClient, public localApi: LocalApiProvider) {}
 
-  actionFavoris(type:string, id:number, name:string){
+  actionFavoris(type:string, id:number, name?:string){
     return this.localApi.postSecure(type+"Favoris", {
       id : id,
       name: name
