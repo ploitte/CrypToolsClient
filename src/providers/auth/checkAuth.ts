@@ -11,10 +11,9 @@ export class CheckAuth {
     public localApi: LocalApiProvider){}
 
 
-
     checkAuthentified(): Promise <any>{
         return new Promise(resolve=>{
-
+          
           this.storage.get("user").then(data=>{
 
             if(data){
@@ -34,7 +33,7 @@ export class CheckAuth {
               resolve(false);
             }
 
-          })
+          });
         })
     }
 }

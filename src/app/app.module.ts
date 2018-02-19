@@ -16,9 +16,9 @@ import { NativeStorage } from "@ionic-native/native-storage";
 import { CheckAuth } from '../providers/auth/checkAuth';
 import { MarketCap } from '../providers/market/marketCap';
 import { loadingTools } from '../providers/Tools/loading';
-import { InfoUser } from '../providers/User/infoUser';
 import { toastTools } from '../providers/Tools/toast';
 import { MoneyProvider } from '../providers/maintenance/money';
+import { FavorisProvider } from '../providers/User/favoris';
 
 
 
@@ -51,7 +51,7 @@ import { MoneyProvider } from '../providers/maintenance/money';
     CheckAuth,
     AuthProvider,
     MarketCap,
-    InfoUser,
+    FavorisProvider,
     MoneyProvider,
 
     //Other

@@ -17,13 +17,11 @@ export class MoneyProvider {
   constructor(public http: HttpClient, public localApi: LocalApiProvider, public storage:Storage) {}
 
     //Voir droit admin coté serveur
-    pushMoneys(id, money:any){
+    pushMoneys(id:number, money:any){
         return this.localApi.post("addMoney", {
             "id" : id,
             "moneys" : money  
         });
     }
-
-
 
 }

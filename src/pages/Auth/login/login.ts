@@ -48,7 +48,7 @@ export class LoginPage {
     //Juste après l'inscription
     let message = navParams.get("message");
     if(message){
-      this.toastTools.start(message, 3000, "bottom", true);
+      this.toastTools.start(message, 5000, "bottom", true);
     }
     
   }

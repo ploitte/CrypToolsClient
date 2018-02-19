@@ -23,8 +23,7 @@ export class toastTools {
             message: message,
             duration: time,
             position: position,
-            showCloseButton: button,
-            dismissOnPageChange: true
+            showCloseButton: button
         });
         this.toast.present();
     }

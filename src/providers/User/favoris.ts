@@ -11,24 +11,16 @@ import { LocalApiProvider } from "../local-api/local-api";
   and Angular DI.
 */
 @Injectable()
-export class InfoUser{
+export class FavorisProvider{
 
   constructor(public http: HttpClient, public localApi: LocalApiProvider) {}
 
+  actionFavoris(type:string, id:number, name:string){
+    return this.localApi.postSecure(type+"Favoris", {
+      id : id,
+      name: name
+    });
+  }
 
-    getFavoris(id:number){
-
-       return this.localApi.postSecure("getFavoris", {
-            id: id
-        });
-    }
-
-    postFavoris(id:number, data:any){
-
-        return this.localApi.postSecure("addFavoris", {
-            idUser: id,
-            favoris: data
-        });
-    }
 
 }
