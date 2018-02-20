@@ -55,10 +55,19 @@ export class LoginPage {
 
   ionViewCanEnter(){
 
-    this.checkAuth.checkAuthentified().then(data=>{
-      if(data == true){
-        this.navCtrl.setRoot("mainTab");
+    this.storage.get("user").then(data=>{
+
+      if(data){
+        this.checkAuth.checkAuthentified(data.token)
+        .then(success=>{
+          this.navCtrl.setRoot("mainTab");
+        }).catch(error=>{
+          console.log("CheckAuth: Token Invalid");
+        })
+      }else{
+        console.log("CheckAuth: No Data");
       }
+
     })
 
     this.storage.get("remember").then(data => {

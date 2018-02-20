@@ -11,29 +11,22 @@ export class CheckAuth {
     public localApi: LocalApiProvider){}
 
 
-    checkAuthentified(): Promise <any>{
-        return new Promise(resolve=>{
-          
-          this.storage.get("user").then(data=>{
+    checkAuthentified(token:string): Promise<any>{
+         
+        let newPromise = new Promise((resolve, reject)=>{
 
-            if(data){
-
-              this.localApi.post("checkAuth", {
-                token: data.token
-              }).subscribe(response=>{
-              
-                if(response["message"] == "good"){
-                  resolve(true);
-                }else{
-                  resolve(false);
-                }
-              });
-
+          this.localApi.post("checkAuth", {
+            token: token
+          }).subscribe(data=>{
+            if(data["message"] === "good"){
+              resolve("good");
             }else{
-              resolve(false);
+              reject("bad");
             }
-
           });
-        })
+
+        });
+      return newPromise;
+        
     }
 }
