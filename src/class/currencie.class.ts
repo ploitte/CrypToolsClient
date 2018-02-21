@@ -18,7 +18,7 @@ export class Currencie{
     // total_supply:string;
 
     //Favoris Param
-    inFav:boolean;
+    isFav:boolean;
 
 
     constructor(
@@ -54,7 +54,7 @@ export class Currencie{
         this.symbol = symbol;
         // this.total_supply = total_supply;
 
-        this.inFav = false;
+        this.isFav = false;
     }
 
 }

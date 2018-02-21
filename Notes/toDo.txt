@@ -1,0 +1,23 @@
+
+
+
+    À voir:
+
+
+        Check Auth:
+            - Voir si token valide sinon...  FAIT
+        
+        Voir Margin Header component:
+            -Component en position absolute tout le temps FAIT
+
+        Voir tabs: 
+            -Tabs visibles une fois sur 2 FAIT (Probleme sur navigateur apparemment pas sur mobile)
+
+
+
+        Voir Favoris: 
+            -Ajouter/Suppression favoris (client/serveur)   FAIT
+            -Ajout Couleur favoris Toogle En cours FAIT
+            -Afficher favoris (Onglet/Segment : animation) en cours -> Voir ion-slides
+            
+            

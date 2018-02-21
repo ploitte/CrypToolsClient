@@ -62,7 +62,7 @@ export class LoginPage {
         .then(success=>{
           this.navCtrl.setRoot("mainTab");
         }).catch(error=>{
-          console.log("CheckAuth: Token Invalid");
+          this.storage.remove("user");
         })
       }else{
         console.log("CheckAuth: No Data");

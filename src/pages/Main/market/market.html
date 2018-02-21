@@ -4,27 +4,7 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<!-- <ion-header>
 
-  <ion-navbar color="primary">
-
-    <div id="navBarre">
-
-        <div id="leftTitle">
-            <ion-icon name="logo40"></ion-icon>
-            <h4>Market</h4>
-        </div>
-
-        <div id="rightTitle">
-            <ion-icon name="contact" id="user"></ion-icon>
-            <ion-icon name="log-out" id="out"></ion-icon>
-        </div>
-
-    </div>
-
-  </ion-navbar>
-
-</ion-header> -->
 
 <ion-header>
     <my-header rights="{{rights}}" title="Market"></my-header>
@@ -41,6 +21,7 @@
 
         <ion-segment-button value="favoris"> 
           <ion-icon name="star" color="secondary"></ion-icon>
+          <span>({{favoris.length}})</span>
         </ion-segment-button>
 
     </ion-segment>
@@ -60,16 +41,21 @@
     <!-- Currencies -->
     <div class="titleList" id="barTitle">
 
-      <div class="classement titleDetail" (click)="orderingBy('rank')" id="rank">#</div>
-      <div class="coin titleDetail" (click)="orderingBy('name')">Coin</div>
-      <div class="price titleDetail" (click)="orderingBy('price_usd')">Price</div>
-      <div class="change titleDetail" (click)="orderingBy('percent_change_24h')">Chg.24h</div>
+      <div class="classement titleDetail" id="rank">#</div>
+      <div class="coin titleDetail" >Coin</div>
+      <div class="price titleDetail" >Price</div>
+      <div class="change titleDetail" >Chg.24h</div>
       <div class="favorite titleDetail" id="favrite"></div>
 
     </div>
+
+    <h2 class="testTrans" id="noFavtext" *ngIf="appType === 'favoris' && favoris.length == 0">
+      You have no favorites</h2>
+    
+
     <ion-list>
-      
-      <div class="titleList currencieList"  *ngFor="let currencie of currencies | filter:searchBar | orderBy:selectedCol:selectedDirection; let i = index;">
+
+      <div class="titleList currencieList"  *ngFor="let currencie of getAppType() | filter:searchBar; let i = index;">
           <div class="classement titleDetail">{{currencie.rank}}</div>
           <div class="coin titleDetail">
             <span class="nameCoin">{{currencie.name }}</span>
@@ -77,12 +63,11 @@
           </div>
           <div class="price titleDetail">${{currencie.price_usd}}</div>
           <div colorPourcent class="change titleDetail" id="{{currencie.change24h}}">{{currencie.change24h}}%</div>
-          <div class="favorite titleDetail" (click)="AddSuppFavoris(i)"><ion-icon name="star"></ion-icon></div>
+          <div *ngIf="appType=='market'" [ngClass]="(currencie.isFav===true)?'isFavorite' : 'noFavorite'" (click)="AddSuppFavoris(i)"><ion-icon name="star"></ion-icon></div>
+          <div *ngIf="appType =='favoris'" [ngClass]="['favClass', 'noFavorite']"  (click)="AddSuppFavoris(i)"><ion-icon name="close"></ion-icon></div>
       </div>
 
-
     </ion-list>
-
       
 </ion-content>
 

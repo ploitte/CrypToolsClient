@@ -13,20 +13,28 @@ export class CheckAuth {
 
     checkAuthentified(token:string): Promise<any>{
          
-        let newPromise = new Promise((resolve, reject)=>{
+      //   let newPromise = new Promise((resolve, reject)=>{
 
-          this.localApi.post("checkAuth", {
-            token: token
-          }).subscribe(data=>{
-            if(data["message"] === "good"){
-              resolve("good");
-            }else{
-              reject("bad");
-            }
-          });
+      //     this.localApi.post("checkAuth", {
+      //       token: token
+      //     }).subscribe(data=>{
+      //       if(data["message"] === "good"){
+      //         resolve("good");
+      //       }else{
+      //         reject("bad");
+      //       }
+      //       console.log(data);
+      //     }),(err)=>{ console.log("test")};
 
-        });
-      return newPromise;
+      //   });
+      // return newPromise;
+
+
+      let newprom =  this.localApi.post("checkAuth", {
+              token: token
+      }).toPromise();
+
+      return newprom;
         
     }
 }

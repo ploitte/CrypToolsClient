@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
+import { Component, ViewChild  } from '@angular/core';
+import { IonicPage, NavController, NavParams, Events, Slides } from 'ionic-angular';
 import { MarketCap } from '../../../providers/market/marketCap';
 import { loadingTools } from '../../../providers/Tools/loading';
 import { Storage } from '@ionic/storage';
@@ -45,7 +45,13 @@ export class MarketPage {
 
   //Favoris
   favoris:Currencie[] = [];
-  favorisFlag:boolean = false;
+  
+
+  //Segment(Onglet)
+  appType:string = "market";
+  @ViewChild('mySlider') slider: Slides;
+
+
 
 
   constructor(public navCtrl: NavController, 
@@ -74,6 +80,7 @@ export class MarketPage {
         //Check if Auth
         this.checkAuth.checkAuthentified(data.token).then(success=>{
           console.log("CheckAuth: Good");
+
           this.getCurrencies();
         }).catch(error=>{
           this.navCtrl.setRoot("loginPage");
@@ -82,10 +89,7 @@ export class MarketPage {
       }else{
         this.navCtrl.setRoot("loginPage");
       }
-
     })
-
-    
   }
 
   //Get all currencies
@@ -119,6 +123,12 @@ export class MarketPage {
     })
   }
   
+  //Admin: Add money in bdd
+  pushMoneys(){
+    this.moneyProvider.pushMoneys( this.user.id, this.currencies).subscribe(response=>{
+    });
+  }
+
   //Get User's favorites
   getFavoris(){
     this.favoris = [];
@@ -135,7 +145,7 @@ export class MarketPage {
       for(let key in response){
         for(let key2 in this.currencies){
           if(response[key].name === this.currencies[key2].id){
-            this.currencies[key2].inFav = true;
+            this.currencies[key2].isFav = true;
             this.favoris.push(this.currencies[key2]);
             flag = false;
           }
@@ -151,28 +161,14 @@ export class MarketPage {
     });
   }
 
-  //Sort click title
-  orderingBy(col:string){
-    this.selectedFlag =! this.selectedFlag;
-    this.selectedCol = col;
-    this.selectedDirection = this.selectedFlag ? 1 : -1;
-  }
-
-  //Admin: Add money in bdd
-  pushMoneys(){
-    
-      this.moneyProvider.pushMoneys( this.user.id, this.currencies).subscribe(response=>{
-        console.log(response);
-      });
-
-  }
-
-  //Add Supp favorite
+  //Add Supp favorite Toggle
   AddSuppFavoris(index){
 
     let flag:boolean;
     let indice:number;
-    let currencie = this.currencies[index];
+
+    let currencie = (this.appType == "market") ? this.currencies[index] : this.favoris[index];
+    let tab = (this.appType == "market") ? this.favoris : this.currencies;
 
     this.loadingTools.start();
 
@@ -180,33 +176,56 @@ export class MarketPage {
       flag = true;
     }
 
-    for(let key in this.favoris){
-      if(this.favoris[key].id === currencie.id){
+    for(let key in tab){
+      if(tab[key].id === currencie.id){
         flag = false;
         indice = parseInt(key);
+        break;
       }else{
         flag = true;
       }
     }
-
+    
     if(flag === true){
-      currencie.inFav = true;
-      this.favoris.push(currencie);
       this.favorisProvider.actionFavoris("add", this.user.id, currencie.id).subscribe(response=>{
-        this.loadingTools.stop();
+        if(response === "added"){
+          currencie.isFav = true;
+          this.favoris.push(currencie);
+          this.loadingTools.stop();
+          console.log(this.favoris);
+        }else{
+          this.loadingTools.stop();
+        }
         console.log(response);
       });
-    }else{
-      currencie.inFav = false;
-      this.favoris.splice(indice, 1);
+    }else if(flag === false){
       this.favorisProvider.actionFavoris("delete", this.user.id, currencie.id).subscribe(response=>{
-        this.loadingTools.stop();
-        console.log(response);
+        if(response === "deleted"){
+          
+          //Ternaire condition
+          this.appType == "market" ? (
+            this.favoris.splice(indice, 1),
+            currencie.isFav = false
+          ) : (
+            this.favoris.splice(index, 1),
+            this.currencies[indice].isFav = false
+          )
+
+          this.loadingTools.stop();
+        }else{
+          this.loadingTools.stop();
+        }
       })
     }
-    console.log(this.currencies);
-    console.log(this.favoris);
+  }
 
+  //Segement Toggle
+  getAppType(){
+    if(this.appType === "market"){
+      return this.currencies;
+    }else{
+      return this.favoris;
+    }
   }
 
 

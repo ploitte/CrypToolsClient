@@ -1,0 +1,12 @@
+page:
+
+
+1. Login/Register
+
+2. Tabs/Main
+    - Home(Coin market cap)
+    - Info(Trouver Api info crypto)
+    - Wallet(Api binance poloniex etc...)
+    - Alert(Api binance poloniex etc...)
+
+3. Profil
