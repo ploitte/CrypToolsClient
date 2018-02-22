@@ -2,13 +2,26 @@ page-market {
 
 
     .red{
-        color: red;
+        background: red !important;
+        color: white;
     }
 
     .green{
-        color: green;
+        background: green;
+        color: white;
+    }
+    ion-slide{
+        height: 100%;
     }
 
+    .swiper-slide{
+        font-size: 1.1em;
+    }
+
+    .list-md{
+        margin: 0;
+    }
+    
     ion-scroll {
         width: 100%;
         height: 100%;

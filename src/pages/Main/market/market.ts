@@ -1,5 +1,5 @@
-import { Component, ViewChild  } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, Slides } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { MarketCap } from '../../../providers/market/marketCap';
 import { loadingTools } from '../../../providers/Tools/loading';
 import { Storage } from '@ionic/storage';
@@ -7,6 +7,7 @@ import { CheckAuth } from '../../../providers/auth/checkAuth';
 import { MoneyProvider } from '../../../providers/maintenance/money';
 import { FavorisProvider } from '../../../providers/User/favoris';
 import { Currencie } from '../../../class/currencie.class';
+import { toastTools } from '../../../providers/Tools/toast';
 
 /**
  * Generated class for the MarketPage page.
@@ -34,27 +35,24 @@ export class MarketPage {
 
   //Currencies
   currencies:Currencie[] = [];
+
+  //GlobalInfo
+  globalInfo:any;
   
   //SearchBar
   searchBar:string;
 
-  //Sort pipe
-  selectedCol:string;
-  selectedFlag:boolean = false;
-  selectedDirection:number = 1;
-
   //Favoris
   favoris:Currencie[] = [];
-  
 
+  //ButtonMoney
+  flagButtonMoney:boolean = false;
+  
   //Segment(Onglet)
   appType:string = "market";
-  @ViewChild('mySlider') slider: Slides;
-
-
-
-
-  constructor(public navCtrl: NavController, 
+  
+  constructor(
+    public navCtrl: NavController, 
     public navParams: NavParams,
     public marketCap: MarketCap,
     public loadingTools:loadingTools,
@@ -62,7 +60,8 @@ export class MarketPage {
     public checkAuth: CheckAuth,
     public events: Events,
     public moneyProvider: MoneyProvider,
-    public favorisProvider:FavorisProvider,){}
+    public favorisProvider:FavorisProvider,
+    public toastTools:toastTools){}
 
   ionViewWillEnter(){
 
@@ -84,6 +83,7 @@ export class MarketPage {
           this.getCurrencies();
         }).catch(error=>{
           this.navCtrl.setRoot("loginPage");
+          this.storage.remove("user");
         })  
   
       }else{
@@ -114,6 +114,10 @@ export class MarketPage {
           }
         
           this.getFavoris();
+          this.marketCap.globalData().subscribe(response=>{
+            this.globalInfo = response;
+            console.log(this.globalInfo);
+          })
           this.loadingTools.stop();
           console.log(this.currencies);
 
@@ -125,26 +129,35 @@ export class MarketPage {
   
   //Admin: Add money in bdd
   pushMoneys(){
+    this.flagButtonMoney = true;
     this.moneyProvider.pushMoneys( this.user.id, this.currencies).subscribe(response=>{
+      if(response["status_code"] === 111){
+        this.toastTools.start("Money(s) added", 4000, "bottom", true, "green");
+      }else{
+        this.toastTools.start("Money already exist", 4000, "bottom", true, "danger");
+      }
+      this.events.subscribe("toast:closed", (flag)=>{
+        this.flagButtonMoney = false;
+      })
     });
   }
 
   //Get User's favorites
   getFavoris(){
     this.favoris = [];
-    this.favorisProvider.actionFavoris("get", this.user.id).subscribe(response=>{
+    this.favorisProvider.actionFavoris("get", this.user.id).then(data=>{
 
       let flag = true;
       this.loadingTools.start();
 
-       if(response === "empty"){
+       if(data === "empty"){
         flag = false;
         console.log("GetFavoris: No favorites");
        }
 
-      for(let key in response){
+      for(let key in data){
         for(let key2 in this.currencies){
-          if(response[key].name === this.currencies[key2].id){
+          if(data[key].name === this.currencies[key2].id){
             this.currencies[key2].isFav = true;
             this.favoris.push(this.currencies[key2]);
             flag = false;
@@ -152,13 +165,11 @@ export class MarketPage {
         }
       }
 
-      console.log(this.favoris);
-
       if(!flag){
         this.loadingTools.stop();
       }
 
-    });
+    }).catch(error =>{});
   }
 
   //Add Supp favorite Toggle
@@ -187,8 +198,8 @@ export class MarketPage {
     }
     
     if(flag === true){
-      this.favorisProvider.actionFavoris("add", this.user.id, currencie.id).subscribe(response=>{
-        if(response === "added"){
+      this.favorisProvider.actionFavoris("add", this.user.id, currencie.id).then(data=>{
+        if(data === "added"){
           currencie.isFav = true;
           this.favoris.push(currencie);
           this.loadingTools.stop();
@@ -196,11 +207,11 @@ export class MarketPage {
         }else{
           this.loadingTools.stop();
         }
-        console.log(response);
-      });
+        console.log(data);
+      }).catch(error=>{});
     }else if(flag === false){
-      this.favorisProvider.actionFavoris("delete", this.user.id, currencie.id).subscribe(response=>{
-        if(response === "deleted"){
+      this.favorisProvider.actionFavoris("delete", this.user.id, currencie.id).then(data=>{
+        if(data === "deleted"){
           
           //Ternaire condition
           this.appType == "market" ? (
@@ -215,7 +226,7 @@ export class MarketPage {
         }else{
           this.loadingTools.stop();
         }
-      })
+      }).catch(error=>{});
     }
   }
 
@@ -227,6 +238,5 @@ export class MarketPage {
       return this.favoris;
     }
   }
-
 
 }

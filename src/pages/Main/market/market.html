@@ -5,11 +5,9 @@
   Ionic pages and navigation.
 -->
 
-
 <ion-header>
     <my-header rights="{{rights}}" title="Market"></my-header>
 </ion-header>
-
 
 <ion-content id="page">
 
@@ -30,21 +28,20 @@
     placeholder="Search currencie..." 
     color="danger"
     [(ngModel)]="searchBar" ></ion-searchbar>
+    <ion-icon name="refresh" color="primary"></ion-icon>
 
     <div id="contButton">
-        <button ion-button default color="danger" *ngIf="rights == 1" (click)="pushMoneys()">UPDATE MONEY IN BDD</button>
+        <button ion-button [disabled]="flagButtonMoney" default color="danger" *ngIf="rights == 1" (click)="pushMoneys()">UPDATE MONEY IN BDD</button>
     </div>
-    
-
-
 
     <!-- Currencies -->
     <div class="titleList" id="barTitle">
 
       <div class="classement titleDetail" id="rank">#</div>
       <div class="coin titleDetail" >Coin</div>
-      <div class="price titleDetail" >Price</div>
-      <div class="change titleDetail" >Chg.24h</div>
+      <div class="price titleDetail" >Price
+      </div>
+      <div class="change titleDetail" >(%)24h</div>
       <div class="favorite titleDetail" id="favrite"></div>
 
     </div>
@@ -52,7 +49,6 @@
     <h2 class="testTrans" id="noFavtext" *ngIf="appType === 'favoris' && favoris.length == 0">
       You have no favorites</h2>
     
-
     <ion-list>
 
       <div class="titleList currencieList"  *ngFor="let currencie of getAppType() | filter:searchBar; let i = index;">

@@ -16,10 +16,12 @@ export class FavorisProvider{
   constructor(public http: HttpClient, public localApi: LocalApiProvider) {}
 
   actionFavoris(type:string, id:number, name?:string){
-    return this.localApi.postSecure(type+"Favoris", {
+    let newPro = this.localApi.postSecure(type+"Favoris", {
       id : id,
       name: name
-    });
+    }).toPromise();
+
+    return newPro;
   }
 
 

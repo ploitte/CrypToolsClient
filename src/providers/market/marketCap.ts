@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 /*
@@ -13,14 +13,27 @@ export class MarketCap {
 
 //getAllCurrencie
 private urlBase = "https://api.coinmarketcap.com/v1/ticker/";
+private urlGlobal = "https://api.coinmarketcap.com/v1/global/";
 
-constructor(public http: HttpClient) {}
+//Params
+
+private myParam:HttpParams;
+
+constructor(public http: HttpClient) {
+    this.myParam = new HttpParams().set('convert', "EUR");
+}
 
 
 AllCurrencie(parameters ?:any){
     return this.http.get(this.urlBase, {
         params: parameters
-    })
+    });
+}
+
+globalData(parameters ?:any){
+    return this.http.get(this.urlGlobal, {
+        params: this.myParam
+    });
 }
 
 

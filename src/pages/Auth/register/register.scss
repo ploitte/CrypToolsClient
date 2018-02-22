@@ -1,14 +1,26 @@
 page-register {
 
 
+  
+
     #registerPage{
 
+        position: relative;
         display: flex;
         flex-direction: column;
         justify-content: center;
         background: grey;
         background-image: url("../assets/imgs/background/test1.png");
 
+
+        span{
+            width: 100%;
+            position: absolute;
+            text-align: center;
+            bottom:0%;
+            color: white;
+        }
+        
         #logo{
             height: 220px;
             width: 220px;
@@ -24,7 +36,7 @@ page-register {
         }
 
         .top{
-            position: relative;
+            height: 45%;
             
             #errors{
                 position: absolute;
@@ -47,15 +59,6 @@ page-register {
             flex-direction: column;
             justify-content: flex-start;
             position: relative;
-
-            span{
-                width: 100%;
-                position: absolute;
-                text-align: center;
-                bottom:10%;
-                color: white;
-            }
-
 
             form{
                 width: 100%;

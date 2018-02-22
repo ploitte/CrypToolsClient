@@ -48,7 +48,7 @@ export class LoginPage {
     //Juste après l'inscription
     let message = navParams.get("message");
     if(message){
-      this.toastTools.start(message, 5000, "bottom", true);
+      this.toastTools.start(message, 5000, "bottom", true, "primary");
     }
     
   }
@@ -75,7 +75,6 @@ export class LoginPage {
     })
 
   }
-
 
   submitLogin(){
 
@@ -104,8 +103,6 @@ export class LoginPage {
     });   
   }
 
-
-
   toggleRemember(event){
     if(event.target.checked){
       this.checkRemember = true;
@@ -121,10 +118,5 @@ export class LoginPage {
   gotToForgotPass(){
     this.navCtrl.setRoot("forgotPassPage");
   }
-
-
-
-  toastIt(){
-    this.toastTools.start("Salut les gens", 10000, "bottom", true);
-  }
+  
 }

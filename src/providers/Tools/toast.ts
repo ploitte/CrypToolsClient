@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ToastController } from 'ionic-angular';
+import { ToastController, Events } from 'ionic-angular';
 
 
 
@@ -15,17 +15,22 @@ export class toastTools {
 
     toast:any;
 
-  constructor(private toastCtrl: ToastController){}
+  constructor(private toastCtrl: ToastController,
+    public events: Events){}
 
+    start(message:string, time:number, position:string, button:boolean, classToast:string){
 
-    start(message:string, time:number, position:string, button:boolean){
         this.toast = this.toastCtrl.create({
             message: message,
             duration: time,
             position: position,
-            showCloseButton: button
+            showCloseButton: button,
+            cssClass: classToast
         });
         this.toast.present();
+        this.toast.onDidDismiss(() => {
+            this.events.publish("toast:closed", true);
+        });
     }
 
 
